@@ -15,7 +15,6 @@ class ownerPDFlist(models.Model):
     #Meta data for ownerPDFlist
     #Else the display name in the admin dashboard will be "Owner pd flists"
     class Meta:
-        verbose_name="ownerPDFlist"
         verbose_name_plural="ownerPDFlist"
     
 class PDF(models.Model):
@@ -30,3 +29,24 @@ class PDF(models.Model):
     class Meta:
         verbose_name="PDF"
         verbose_name_plural="PDFs"
+
+
+class CredentialList(models.Model):
+    name = models.CharField(max_length = 200)
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name_plural = "CredentialList"
+        
+    
+class Credentials(models.Model):
+    CredentialList=models.ForeignKey(CredentialList, on_delete=models.CASCADE)
+    regno = models.CharField(max_length = 10)
+    password = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return self.regno
+    
+    class Meta:
+        verbose_name_plural = "Credentials"
