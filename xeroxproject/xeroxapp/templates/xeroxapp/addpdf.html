@@ -1,0 +1,14 @@
+{% extends "xeroxapp/base.html" %}
+
+{% block title %} Add PDF {% endblock %}
+
+{% block content %}
+Add a PDF
+<form method = "post" action = "{% url 'xeroxapp:addPDF' %}">
+	{% csrf_token %}
+	{{form}}
+	<button type = "submit", name = "Add">Add PDF</button>
+	
+</form>
+
+{% endblock %}

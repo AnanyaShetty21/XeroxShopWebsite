@@ -19,10 +19,13 @@ class ownerPDFlist(models.Model):
     
 class PDF(models.Model):
     ownerPDFlist=models.ForeignKey(ownerPDFlist, on_delete=models.CASCADE) #use 'o.pdf_set.all()' to access all the pdfs present
-    text=models.CharField(max_length=300)
+    Slno=models.IntegerField()
+    name=models.CharField(max_length=300)
+    price = models.IntegerField()
+
 
     def __str__(self):
-        return self.text
+        return f"{self.Slno} - {self.name} - {self.price}"
     
     #Meta data for PDF
     #Else the display name in the admin dashboard will be "Pdfs"

@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import ownerPDFlist, PDF
+from .addpdf import AddPDF
 
 
 # Create your views here.
@@ -24,11 +25,32 @@ def ownerpdf(response):
         output = f"<h1>{ls.name}</h1>"
         
         if pdfs:
+            output += "<h3>Sl no.   PDF     Price</h3>" #This line will be removed once the template is created
             for pdf in pdfs:
-                output += f"<p>{pdf.text}</p>"
+                output += f"<p>{pdf.Slno}   {pdf.name}  {pdf.price}</p>"
         else:
             output += "<p>No notes found.</p>"
         
         return HttpResponse(output)
     except ownerPDFlist.DoesNotExist:
         return HttpResponse("Notes does not exist.")
+
+
+def addPDF(response):
+    if response.method == "POST":
+        form = AddPDF(response.POST)
+
+        if form.is_valid():
+            s = form.cleaned_data["Slno"]
+            n = form.cleaned_data["name"]
+            p = form.cleaned_data["price"]
+            # Get or create ownerPDFlist (change the condition as needed)
+            owner_pdf_list, created = ownerPDFlist.objects.get_or_create(name="Notes")
+            
+            # Create a new PDF instance associated with the ownerPDFlist
+            pdf = PDF(Slno=s, name=n, price=p, ownerPDFlist=owner_pdf_list)
+            pdf.save()
+        return HttpResponseRedirect("/owner/addpdf")
+    else:
+        form = AddPDF()
+    return render(response, "xeroxapp/addpdf.html", {"form":form})

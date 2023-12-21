@@ -19,6 +19,6 @@ from django.urls import path, include
 from xeroxapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("owner/", include("xeroxapp.urls")),
+    path("owner/", include(("xeroxapp.urls", "xerox_app"), namespace="xeroxapp")),
 ]
 
