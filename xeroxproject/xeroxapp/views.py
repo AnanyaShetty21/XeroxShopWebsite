@@ -7,8 +7,8 @@ from .addpdf import AddPDF
 # Create your views here.
 
 
-def owner(response):
-    return HttpResponse("<h1>Owner's webpage</h1>")
+def welcome(response):
+    return render(response, "xeroxapp/home.html", {})
 
 
 """def ownerpdf(response):
@@ -17,7 +17,7 @@ def owner(response):
     return HttpResponse("<h1>%s</h1><br></br><p>%s</p>"%(ls.name,str(pdf.text)))"""
 
 
-def ownerpdf(response):
+def ownerpdf(response):#This block of code will be modified once the template is created
     try:
         ls = ownerPDFlist.objects.get(name="Notes")
         pdfs = ls.pdf_set.all()
@@ -25,7 +25,7 @@ def ownerpdf(response):
         output = f"<h1>{ls.name}</h1>"
         
         if pdfs:
-            output += "<h3>Sl no.   PDF     Price</h3>" #This line will be removed once the template is created
+            output += "<h3>Sl no.   PDF     Price</h3>" 
             for pdf in pdfs:
                 output += f"<p>{pdf.Slno}   {pdf.name}  {pdf.price}</p>"
         else:
@@ -50,7 +50,7 @@ def addPDF(response):
             # Create a new PDF instance associated with the ownerPDFlist
             pdf = PDF(Slno=s, name=n, price=p, ownerPDFlist=owner_pdf_list)
             pdf.save()
-        return HttpResponseRedirect("/owner/addpdf")
+        return HttpResponseRedirect("/addpdf")
     else:
         form = AddPDF()
     return render(response, "xeroxapp/addpdf.html", {"form":form})
