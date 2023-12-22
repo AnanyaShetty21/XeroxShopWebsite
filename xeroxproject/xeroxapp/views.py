@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 
 
 def welcome(response):
-    return render(response, "xeroxapp/home.html", {})
+    return render(response, "home.html", {})
 
 
 """def ownerpdf(response):
@@ -20,7 +20,7 @@ def welcome(response):
 
 def ownerpdf(response):
     p = ownerPDFlist.objects.get(name = "Notes")
-    return render(response, "xeroxapp/pdflist.html", {"p":p})
+    return render(response, "pdflist.html", {"p":p})
 
 
 def addPDF(response):
