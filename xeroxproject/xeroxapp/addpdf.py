@@ -1,6 +1,6 @@
 from django import forms
 
 class AddPDF(forms.Form):
-	Slno = forms.IntegerField(label = "slno")
-	name = forms.CharField(label = "name", max_length = 300)
-	price = forms.IntegerField(label = "price")
+	Slno = forms.IntegerField(label = "Sl no.")
+	name = forms.CharField(label = "Name", max_length = 300)
+	price = forms.IntegerField(label = "Price")

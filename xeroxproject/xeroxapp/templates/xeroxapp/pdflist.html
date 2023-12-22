@@ -1,0 +1,15 @@
+{% extends "xeroxapp/base.html" %}
+{% block title %}PDF List{% endblock %}
+{% block content %}<h1>Available PDFs</h1>
+
+
+<table border="1">
+	<tr><th>Sl no.</th><th>Name</th><th>Price</th></tr>
+{% for pdf in p.pdf_set.all %}
+	<tr><td>{{pdf.Slno}}</td><td>{{pdf.name}}</td><td>{{pdf.price}}</td></tr>
+
+{% endfor %}
+</table>
+
+
+{% endblock %}

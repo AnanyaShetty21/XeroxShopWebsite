@@ -17,23 +17,9 @@ def welcome(response):
     return HttpResponse("<h1>%s</h1><br></br><p>%s</p>"%(ls.name,str(pdf.text)))"""
 
 
-def ownerpdf(response):#This block of code will be modified once the template is created
-    try:
-        ls = ownerPDFlist.objects.get(name="Notes")
-        pdfs = ls.pdf_set.all()
-        
-        output = f"<h1>{ls.name}</h1>"
-        
-        if pdfs:
-            output += "<h3>Sl no.   PDF     Price</h3>" 
-            for pdf in pdfs:
-                output += f"<p>{pdf.Slno}   {pdf.name}  {pdf.price}</p>"
-        else:
-            output += "<p>No notes found.</p>"
-        
-        return HttpResponse(output)
-    except ownerPDFlist.DoesNotExist:
-        return HttpResponse("Notes does not exist.")
+def ownerpdf(response):
+    p = ownerPDFlist.objects.get(name = "Notes")
+    return render(response, "xeroxapp/pdflist.html", {"p":p})
 
 
 def addPDF(response):
