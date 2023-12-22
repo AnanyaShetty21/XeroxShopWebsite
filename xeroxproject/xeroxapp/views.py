@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import ownerPDFlist, PDF
+from .models import ownerPDFlist, PDF, Credentials
 from .addpdf import AddPDF
-
+from .forms import LoginForm
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -53,4 +54,20 @@ def addPDF(response):
         return HttpResponseRedirect("/addpdf")
     else:
         form = AddPDF()
-    return render(response, "xeroxapp/addpdf.html", {"form":form})
+    return render(response, "addpdf.html", {"form":form})
+
+def login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            regno = form.cleaned_data.get('regno')
+            password = form.cleaned_data.get('password')
+            user = Credentials.objects.filter(regno=regno, password=password).first()
+            if user:
+                return HttpResponseRedirect('/pdflist')
+            else:
+                return render(request, 'login.html', {'error_message' : 'Invalid credentials. Please try again.'})
+
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})

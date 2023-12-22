@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %} Login Page {% endblock %}
+
+
+{% block content%} 
+<form method="post" class="from-group" action = "{% url 'xeroxapp:login' %}">
+    {% csrf_token %}
+    <label for="regno" name="regno" aria-placeholder="Enter your registration number">Registration Number:</label><br>
+    <input type="text" for ="username" name="username"></input>
+    <br>
+    <label for="password" name="'password" aria-placeholder="Enter your password">Password:</label><br>
+    <input type="text" for="password" name="password"></input>
+    <br>
+    <button type="submit">Login</button>
+
+</form>
+{% endblock content %}
