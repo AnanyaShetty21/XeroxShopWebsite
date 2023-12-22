@@ -20,5 +20,6 @@ from xeroxapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include(("xeroxapp.urls", "xerox_app"), namespace="xeroxapp")),
+    path("", include("django.contrib.auth.urls"))
 ]
 
