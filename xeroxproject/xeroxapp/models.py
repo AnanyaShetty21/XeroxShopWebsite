@@ -84,3 +84,16 @@ class Credentials(models.Model):
     
     class Meta:
         verbose_name_plural = "Credentials"
+
+
+
+class OwnerCredentials(models.Model):
+    CredentialList=models.ForeignKey(CredentialList, on_delete=models.CASCADE)
+    regno = models.CharField(max_length = 10)
+    password = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return self.regno
+    
+    class Meta:
+        verbose_name_plural = "OwnerCredentials"
