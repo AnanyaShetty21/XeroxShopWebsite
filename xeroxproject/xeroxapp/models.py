@@ -34,6 +34,37 @@ class PDF(models.Model):
         verbose_name_plural="PDFs"
 
 
+
+class studentPDFlist(models.Model):
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+    
+    #Meta data for studentPDFlist
+    #Else the display name in the admin dashboard will be "Student pd flists"
+    class Meta:
+        verbose_name_plural="studentPDFlist"
+    
+class studentPDF(models.Model):
+    studentPDFlist=models.ForeignKey(studentPDFlist, on_delete=models.CASCADE) #use 'o.pdf_set.all()' to access all the pdfs present
+    Slno=models.IntegerField()
+    name=models.CharField(max_length=300)
+    price = models.IntegerField()
+    order = models.BooleanField()
+
+
+    def __str__(self):
+        return f"{self.Slno} - {self.name} - {self.price} - {self.order}"
+    
+    #Meta data for studentPDF
+    #Else the display name in the admin dashboard will be "studentPdfs"
+    class Meta:
+        verbose_name="studentPDF"
+        verbose_name_plural="studentPDFs"
+
+
+
 class CredentialList(models.Model):
     name = models.CharField(max_length = 200)
     def __str__(self):

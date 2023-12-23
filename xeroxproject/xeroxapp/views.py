@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import ownerPDFlist, PDF, Credentials
+from .models import ownerPDFlist, PDF, studentPDFlist, studentPDF, Credentials
 from .addpdf import AddPDF
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
@@ -22,6 +22,10 @@ def ownerpdf(response):
     p = ownerPDFlist.objects.get(name = "Notes")
     return render(response, "pdflist.html", {"p":p})
 
+def studentpdf(response):
+    p = studentPDFlist.objects.get(name = "Notes")
+    return render(response, "pdfliststudent.html", {"p":p})
+
 
 def addPDF(response):
     if response.method == "POST":
@@ -33,10 +37,13 @@ def addPDF(response):
             p = form.cleaned_data["price"]
             # Get or create ownerPDFlist (change the condition as needed)
             owner_pdf_list, created = ownerPDFlist.objects.get_or_create(name="Notes")
+            student_pdf_list, created = studentPDFlist.objects.get_or_create(name="Notes")
             
             # Create a new PDF instance associated with the ownerPDFlist
             pdf = PDF(Slno=s, name=n, price=p, ownerPDFlist=owner_pdf_list)
+            studentpdf = studentPDF(Slno=s, name=n, price=p, order=False, studentPDFlist=student_pdf_list)
             pdf.save()
+            studentpdf.save()
         return HttpResponseRedirect("/addpdf")
     else:
         form = AddPDF()

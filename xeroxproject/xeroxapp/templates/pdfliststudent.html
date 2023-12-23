@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}PDF List{% endblock %}
+{% block content %}<h1>Available PDFs</h1>
+
+
+<table border="1">
+	<tr><th>Sl no.</th><th>Name</th><th>Price</th><th>Order</th></tr>
+{% for pdf in p.studentpdf_set.all %}
+	<tr><td>{{pdf.Slno}}</td><td>{{pdf.name}}</td><td>{{pdf.price}}</td>
+		<td>
+		{% if pdf.order == False %}
+			<input type = "checkbox", value="ordered", name="{{pdf.name}}">
+		{% endif %}
+
+		</td></tr>
+
+{% endfor %}
+</table>
+
+
+{% endblock %}
