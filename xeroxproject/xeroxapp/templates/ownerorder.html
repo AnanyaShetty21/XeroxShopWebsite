@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Orders{% endblock %}
+{% block content %}<h1>Orders</h1>
+
+
+<table border="1">
+	<tr><th>Sl no.</th><th>Name</th><th>Price</th><th>Completed</th></tr>
+{% for pdf in p.ownerorder_set.all %}
+	<tr><td>{{pdf.Slno}}</td><td>{{pdf.name}}</td><td>{{pdf.price}}</td>
+		<td>
+		{% if pdf.completed == True %}
+			<input type = "checkbox", value="completed", name="{{pdf.name}}" checked>
+		{% else %}
+			<input type = "checkbox", value="completed", name="{{pdf.name}}">
+		{% endif %}
+
+		</td></tr>
+
+{% endfor %}
+</table>
+
+
+{% endblock %}

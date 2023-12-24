@@ -7,7 +7,7 @@ Add a PDF
 <form method = "post" action = "{% url 'xeroxapp:addPDF' %}">
 	{% csrf_token %}
 	{{form.as_p}}
-	<button type = "submit", name = "Add">Add PDF</button>
+	<button type = "submit" name = "Add" value = "Add">Add PDF</button>
 	
 </form>
 

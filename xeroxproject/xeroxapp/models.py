@@ -64,6 +64,20 @@ class studentPDF(models.Model):
         verbose_name_plural="studentPDFs"
 
 
+class OwnerOrder(models.Model):
+    ownerPDFlist=models.ForeignKey(ownerPDFlist, on_delete=models.CASCADE)
+    Slno=models.IntegerField()
+    name=models.CharField(max_length=300)
+    price = models.IntegerField()
+    completed = models.BooleanField()
+
+    def __str__(self):
+        return f"{self.Slno} - {self.name} - {self.price} - {self.completed}"
+
+    class Meta:
+        verbose_name_plural="OwnerOrder"
+
+
 
 class CredentialList(models.Model):
     name = models.CharField(max_length = 200)

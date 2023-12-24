@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import ownerPDFlist, PDF, studentPDFlist, studentPDF, Credentials
+from .models import ownerPDFlist, PDF, studentPDFlist, studentPDF, OwnerOrder, Credentials
 from .addpdf import AddPDF
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
@@ -12,24 +12,37 @@ def welcome(response):
     return render(response, "home.html", {})
 
 
-"""def ownerpdf(response):
-    ls = ownerPDFlist.objects.get(name = "Notes") #id=1
-    pdf = ls.pdf_set.all()
-    return HttpResponse("<h1>%s</h1><br></br><p>%s</p>"%(ls.name,str(pdf.text)))"""
-
-
 def ownerpdf(response):
     p = ownerPDFlist.objects.get(name = "Notes")
     return render(response, "pdflist.html", {"p":p})
 
 def studentpdf(response):
     p = studentPDFlist.objects.get(name = "Notes")
+    if response.method == "POST":
+        print(response.POST)
+        if response.POST.get("order"):
+            for pdf in p.studentpdf_set.all():
+                if response.POST.get(pdf.name) == "ordered":
+                    s = pdf.Slno
+                    n = pdf.name
+                    p = pdf.price
+                    owner_pdf_list, created = ownerPDFlist.objects.get_or_create(name="Orders")
+                    o = OwnerOrder(Slno = s, name = n, price = p, completed = False, ownerPDFlist=owner_pdf_list)
+                    o.save()
+        
     return render(response, "pdfliststudent.html", {"p":p})
+
+
+
+def ownerorder(response):
+    p = ownerPDFlist.objects.get(name = "Orders")
+    return render(response, "ownerorder.html", {"p":p})
 
 
 def addPDF(response):
     if response.method == "POST":
         form = AddPDF(response.POST)
+        print(response.POST)
 
         if form.is_valid():
             s = form.cleaned_data["Slno"]

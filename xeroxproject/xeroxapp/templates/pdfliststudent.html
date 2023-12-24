@@ -2,20 +2,25 @@
 {% block title %}PDF List{% endblock %}
 {% block content %}<h1>Available PDFs</h1>
 
+<form method="post" action="#">
+	{% csrf_token %}
+	<table border="1">
+		<tr><th>Sl no.</th><th>Name</th><th>Price</th><th>Order</th></tr>
+	{% for pdf in p.studentpdf_set.all %}
+		<tr><td>{{pdf.Slno}}</td><td>{{pdf.name}}</td><td>{{pdf.price}}</td>
+			<td>
+			{% if pdf.order == True %}
+				<input type = "checkbox", value="ordered", name="{{pdf.name}}" checked>
+			{% else %}
+				<input type = "checkbox", value="ordered", name="{{pdf.name}}">
+			{% endif %}
 
-<table border="1">
-	<tr><th>Sl no.</th><th>Name</th><th>Price</th><th>Order</th></tr>
-{% for pdf in p.studentpdf_set.all %}
-	<tr><td>{{pdf.Slno}}</td><td>{{pdf.name}}</td><td>{{pdf.price}}</td>
-		<td>
-		{% if pdf.order == False %}
-			<input type = "checkbox", value="ordered", name="{{pdf.name}}">
-		{% endif %}
+			</td></tr>
 
-		</td></tr>
+	{% endfor %}
+	</table>
 
-{% endfor %}
-</table>
+	<button type="submit", value = "order", name="order">Add to cart</button>
 
-
+</form>
 {% endblock %}
