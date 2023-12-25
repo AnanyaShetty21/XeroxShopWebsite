@@ -36,6 +36,21 @@ def studentpdf(response):
 
 def ownerorder(response):
     p = ownerPDFlist.objects.get(name = "Orders")
+    if response.method == "POST":
+        print(response.POST)
+        if response.POST.get("save"):
+            for pdf in p.ownerorder_set.all():
+                if response.POST.get("c" + str(pdf.id)) == "completed":
+                    pdf.completed = True
+                    pdf.save()
+                else:
+                    pdf.completed = False
+                    pdf.save()
+
+
+
+
+
     return render(response, "ownerorder.html", {"p":p})
 
 
