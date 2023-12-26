@@ -47,6 +47,11 @@ def ownerorder(response):
                     pdf.completed = False
                     pdf.save()
 
+        if response.POST.get("delete"):
+            for pdf in p.ownerorder_set.all():
+                if pdf.completed == True:
+                    pdf.delete()
+
 
 
 
