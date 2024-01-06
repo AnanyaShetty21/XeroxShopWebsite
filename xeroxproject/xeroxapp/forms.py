@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from django.forms import ModelForm
-from .models import Credentials, CredentialList
+from .models import StudentCredentials, CredentialList, OwnerCredentials
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -13,7 +13,7 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}),
     )
     class Meta:
-        model = Credentials
+        model = StudentCredentials
         fields = ["regno", "password"]
 
 

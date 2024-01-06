@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import ownerPDFlist, PDF, studentPDFlist, studentPDF, OwnerOrder, Credentials
+from .models import ownerPDFlist, PDF, studentPDFlist, studentPDF, OwnerOrder, StudentCredentials, OwnerCredentials
 from .addpdf import AddPDF
 from .forms import LoginForm
 from django.contrib.auth import authenticate, login, logout
@@ -88,12 +88,15 @@ def login(request):
         if form.is_valid():
             regno = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = Credentials.objects.filter(regno=regno, password=password).first()
+            user = StudentCredentials.objects.filter(regno=regno, password=password).first()
             
 
             if user:
-                return HttpResponseRedirect('/pdflist')
+                return HttpResponseRedirect('/pdfliststudent')
             else:
+                user = OwnerCredentials.objects.filter(regno=regno, password=password).first()
+                if user:
+                    return HttpResponseRedirect('/pdflist')
                 return render(request, 'login.html', {'error_message' : 'Invalid credentials. Please try again.'})
 
     else:

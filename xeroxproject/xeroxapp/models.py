@@ -88,7 +88,7 @@ class CredentialList(models.Model):
         verbose_name_plural = "CredentialList"
         
     
-class Credentials(models.Model):
+class StudentCredentials(models.Model):
     CredentialList=models.ForeignKey(CredentialList, on_delete=models.CASCADE)
     regno = models.CharField(max_length = 10)
     password = models.CharField(max_length = 20)
@@ -97,7 +97,7 @@ class Credentials(models.Model):
         return self.regno
     
     class Meta:
-        verbose_name_plural = "Credentials"
+        verbose_name_plural = "StudentCredentials"
 
 
 
