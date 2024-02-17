@@ -8,8 +8,6 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 
-def welcome(response):
-    return render(response, "home.html", {})
 
 
 def ownerpdf(response):
@@ -102,3 +100,5 @@ def login(request):
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
+
+
